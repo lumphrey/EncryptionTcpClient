@@ -128,7 +128,7 @@ public class SubstitutionCipher {
      */
     public void printPermutations() {
 
-        System.out.println("Generated permutations:");
+        System.out.println("Generated permutations of input set:");
         for (int i = 0; i < mPermutations.length; i++) {
             String out = String.format("%1d.\t%2s", i, mPermutations[i]);
             System.out.println(out);

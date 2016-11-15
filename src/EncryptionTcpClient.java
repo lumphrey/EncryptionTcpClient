@@ -100,6 +100,10 @@ public class EncryptionTcpClient {
     private static void initializeCiphers() {
         mSubCipher = new SubstitutionCipher(mTotalSchemes);
         mTransCipher = new TranspositionCipher();
+
+        if(mDebug) {
+            mSubCipher.printPermutations();
+        }
     }
 
 
@@ -202,14 +206,26 @@ public class EncryptionTcpClient {
 
     }
 
+    /**
+     * Encrypts the given String using 2-stage (substitution, transposition) encryption before sending it to the server.
+     * @param msg String to encrypt.
+     */
     private static void sendEncryptedMessage(String msg) {
+        String subCipherText;
+        String transCipherText;
 
-    }
+        subCipherText = mSubCipher.encrypt(msg, mScheme);
+        transCipherText = mTransCipher.encrypt(subCipherText, mScheme);
 
-    private static String encrypt(String msg) {
-        String encrypted = "";
+        try {
+            mToServer.writeBytes(transCipherText + "\n");
+        }
+        catch (IOException e) {
+            System.out.println("Error sending encrypted message to server.");
+            e.printStackTrace();
+            System.exit(-1);
+        }
 
-        return encrypted;
     }
 
 
