@@ -21,8 +21,8 @@ public class EncryptionTcpClient {
 
     private static SubstitutionCipher mSubCipher;
     private static TranspositionCipher mTransCipher;
-    private static int mTotalSchemes;
-    private static int mScheme;
+    private static int mTotalSchemes; //total number of security schemes ("N" as defined by the assignment)
+    private static int mScheme; //the scheme to use
 
     //for use in Diffie-Hellman key exchange
     private static int mG = 5; //base
@@ -69,21 +69,34 @@ public class EncryptionTcpClient {
         System.out.println("Calculated secret: " + mSecretKey);
 
         initializeCiphers();
-        mScheme = mSecretKey % mTotalSchemes;
+        mScheme = mSecretKey % mTotalSchemes; //calculate which scheme to use
 
         System.out.println("Using security scheme " + mScheme);
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
 
+        //user input loop
         while(true) {
+
             System.out.print("Enter message to encrypt and send to server: ");
             userInput = scanner.nextLine();
+            sendEncryptedMessage(userInput);
+
+            if(userInput.equals("quit")) {
+                //TODO send quit message to server
+                break;
+            }
 
         }
+
+
     }
 
 
+    /**
+     * Instantiates the ciphers.
+     */
     private static void initializeCiphers() {
         mSubCipher = new SubstitutionCipher(mTotalSchemes);
         mTransCipher = new TranspositionCipher();
