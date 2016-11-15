@@ -19,7 +19,10 @@ public class EncryptionTcpClient {
     private static int mPort;
     private static InetAddress mDestAddr;
 
+    private static SubstitutionCipher mSubCipher;
+    private static TranspositionCipher mTransCipher;
     private static int mTotalSchemes;
+    private static int mScheme;
 
     //for use in Diffie-Hellman key exchange
     private static int mG = 5; //base
@@ -65,6 +68,10 @@ public class EncryptionTcpClient {
         mSecretKey = calculateSecret(serverNum);
         System.out.println("Calculated secret: " + mSecretKey);
 
+        initializeCiphers();
+        mScheme = mSecretKey % mTotalSchemes;
+
+        System.out.println("Using security scheme " + mScheme);
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
@@ -74,6 +81,12 @@ public class EncryptionTcpClient {
             userInput = scanner.nextLine();
 
         }
+    }
+
+
+    private static void initializeCiphers() {
+        mSubCipher = new SubstitutionCipher(mTotalSchemes);
+        mTransCipher = new TranspositionCipher();
     }
 
 
