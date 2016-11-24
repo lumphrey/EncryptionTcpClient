@@ -26,8 +26,8 @@ public class EncryptionTcpClient {
 
     //for use in Diffie-Hellman key exchange
     private static int mG = 5; //base
-    private static int mP = 23; //modulus
-    private static int mLocalSecret = 15; //TODO: randomize
+    private static int mP = 23; //modulus, must be prime
+    private static int mLocalSecret = 9; //TODO: randomize
     private static int mSecretKey;
 
     //socket
@@ -100,7 +100,6 @@ public class EncryptionTcpClient {
     private static void initializeCiphers() {
         mSubCipher = new SubstitutionCipher(mTotalSchemes);
         mTransCipher = new TranspositionCipher();
-
         if(mDebug) {
             mSubCipher.printPermutations();
         }
