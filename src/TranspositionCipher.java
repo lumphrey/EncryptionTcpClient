@@ -66,6 +66,8 @@ public class TranspositionCipher {
 
         int numColumns = (scheme % 5) + 1;
 
+        numColumns = (numColumns % cipher.length()) + 1;
+
         String text = "";
 
         ArrayList<String> tempArray = new ArrayList();
