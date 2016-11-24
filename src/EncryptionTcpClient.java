@@ -71,7 +71,7 @@ public class EncryptionTcpClient {
         initializeCiphers();
         mScheme = mSecretKey % mTotalSchemes; //calculate which scheme to use
 
-        System.out.println("Using security scheme " + mScheme);
+        System.out.println("Using security scheme " + mScheme + "\n\n\n");
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
@@ -214,10 +214,15 @@ public class EncryptionTcpClient {
         String transCipherText;
 
         subCipherText = mSubCipher.encrypt(msg, mScheme);
+        System.out.println("Substitution cipher generated: " + subCipherText + "\nApplying transposition...");
+
         transCipherText = mTransCipher.encrypt(subCipherText, mScheme);
+
+        System.out.println("Final ciphertext generated: " + transCipherText);
 
         try {
             mToServer.writeBytes(transCipherText + "\n");
+            System.out.println("Sent to server.");
         }
         catch (IOException e) {
             System.out.println("Error sending encrypted message to server.");

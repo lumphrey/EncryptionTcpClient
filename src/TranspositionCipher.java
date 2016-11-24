@@ -20,7 +20,7 @@ public class TranspositionCipher {
         String cipher = "";
         int numColumns = (scheme % 5) + 1;
 
-        numColumns = numColumns % inputString.length();
+        numColumns = numColumns % inputString.length() + 1;
 
         ArrayList<String> rowArray = new ArrayList();
 
